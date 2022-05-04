@@ -27,7 +27,7 @@
     </header>
 
     <!-- Barra de navegación-->
-    <nav class="navbar navbar-expand-lg navbar-primary">
+    <nav class="navbar navbar-expand-lg navbar-primary" style="margin-bottom: 10px;">
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">

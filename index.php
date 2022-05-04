@@ -1,14 +1,20 @@
 <?php include("template/header.php")?>
-<div class="col-md-12">
-    <div class="jumbotron" style="background-color:#d7d7d7; margin-top: 50px;">
-        <h1 class="display-3">Jumbo heading</h1>
-        <p class="lead">Jumbo helper text</p>
-        <hr class="my-2">
-        <p>More info</p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Jumbo action name</a>
-        </p>
+<?php 
+    require("config/conexion.php"); 
+    $querySelect=$conexion->prepare("SELECT * FROM libros");
+    $querySelect->execute();
+    $resultados=$querySelect->fetchAll(PDO::FETCH_ASSOC);
+?>
+<?php foreach($resultados as $resultado){ ?>
+<div class="col-md-3">
+    <div class="card">
+        <img src="assets/img/<?php echo $resultado["imagen"]; ?>" alt="imagen" height="200" class="card-img-top">
+    </div>
+    <div class="card-body">
+        <h4 class="card-title"><?php echo $resultado["nombre"]; ?></h4>
+        <p><?php echo $resultado["autor"]; ?></p>
+        <a href="#" class="btn btn-primary" role="button">Reserva</a>
     </div>
 </div>
-            
+<?php } ?>           
 <?php include("template/footer.php")?>

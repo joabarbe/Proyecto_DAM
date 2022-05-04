@@ -14,7 +14,7 @@
 </head>
 <body>
     <?php $url="http://".$_SERVER['HTTP_HOST']."/Proyecto_Final_DAM"; ?>
-    <nav class="navbar navbar-expand navbar-light bg-light">
+    <nav class="navbar navbar-expand navbar-light" style="background-color: #e3f2fd">
         <div class="nav navbar-nav">
             <a class="nav-item nav-link active" href="libros.php">Libros <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="usuarios.php">Usuarios</a>
