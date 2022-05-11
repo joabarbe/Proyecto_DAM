@@ -2,8 +2,8 @@
     require 'conexion.php';
     switch($accion){
         case "Agregar": //insertar libro
-            $sentencia=$conexion->prepare("INSERT INTO libros(nombre, autor, precio, stock, imagen) 
-                VALUES(:nombre, :autor, :precio, :stock, :imagen)");
+            $sentencia=$conexion->prepare("INSERT INTO libros(nombre, autor, precio, stock, imagen, descripcion) 
+                VALUES(:nombre, :autor, :precio, :stock, :imagen, :descripcion)");
             $sentencia->bindParam(":nombre",$txtNombre);
             $sentencia->bindParam(":autor",$txtAutor);
             $sentencia->bindParam(":precio",$txtPrecio);
@@ -20,19 +20,21 @@
                 move_uploaded_file($tmpImagen,"../assets/img/".$nombreArchivo);
             }
             $sentencia->bindParam(":imagen",$nombreArchivo);
+            $sentencia->bindParam(":descripcion",$txtDescripcion);
             $sentencia->execute();
             header("Location:libros.php");
             break;
         case "Modificar":
             $sentencia=$conexion->prepare("UPDATE libros SET nombre=:nombre, autor=:autor,
-            precio=:precio, stock=:stock WHERE ID=:id");
+            precio=:precio, stock=:stock, descripcion=:descripcion WHERE ID=:id");
             $sentencia->bindParam(":nombre",$txtNombre);
             $sentencia->bindParam(":autor",$txtAutor);
             $sentencia->bindParam(":precio",$txtPrecio);
             $sentencia->bindParam(":stock",$numStock);
+            $sentencia->bindParam(":descripcion",$txtDescripcion);
             $sentencia->bindParam(":id",$txtID);
             $sentencia->execute();
-
+            header("Location:libros.php");
             //modificar imagen
             //establecer nombre de la imagen nueva
             if($txtImagen!=""){
@@ -74,6 +76,7 @@
             $txtAutor=$datosLibro['autor'];
             $txtPrecio=$datosLibro['precio'];
             $numStock=$datosLibro['stock'];
+            $txtDescripcion=$datosLibro['descripcion'];
             $txtImagen=$datosLibro['imagen'];
             break;
         case "Borrar":

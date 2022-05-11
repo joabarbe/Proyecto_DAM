@@ -8,14 +8,15 @@
     require '../config/conexion.php';
   
     if (!empty($_POST['usuario']) && !empty($_POST['contrasenia'])) {
-      $sentencia = $conexion->prepare('SELECT id, usuario, contraseña FROM usuarios WHERE usuario = :usuario');
+      $sentencia = $conexion->prepare('SELECT id, usuario, contrasenia, rol FROM usuarios WHERE usuario = :usuario');
       $sentencia->bindParam(':usuario', $_POST['usuario']);
       $sentencia->execute();
       $resultados = $sentencia->fetch(PDO::FETCH_ASSOC);
       $mensaje = '';
   
-      if (is_countable($resultados) > 0 && ($_POST['contrasenia'] == $resultados['contraseña'])) {
-        $_SESSION['usuario_id'] = $resultados['id'];
+      if (is_countable($resultados) > 0 && password_verify($_POST['contrasenia'],$resultados['contrasenia'])) {
+        $_SESSION["usuario_id"] = $resultados["usuario"];
+        $_SESSION["rol"] = $resultados["rol"];
         header("Location: ../administrador/libros.php");
       } else {
         $mensaje = 'Error al iniciar sesión, vuelva a intentarlo';

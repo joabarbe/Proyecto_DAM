@@ -28,3 +28,17 @@ nav ul li i{
     color:deeppink; padding: 10px;
 }
 
+.precio{
+    color:#fe5d37;
+}
+
+.descripcion{
+    font-size: 13px;
+    color: darkgray;
+}
+
+footer{
+    background-color: #e3f2fd;
+    font-size: 15px;
+    text-align: center;
+}

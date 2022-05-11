@@ -1,11 +1,3 @@
-<!-- para no poder acceder a libros.php directamente poniendo el enlace  -->
-<?php
-    session_start();
-    require '../config/conexion.php';
-    if (!isset($_SESSION['usuario_id'])) {
-        header('Location: login.php');
-    }
-?>
 <?php include('template/header.php'); ?>
 <?php
     $txtID=(isset($_POST['txtID']))?$_POST['txtID']:"";
@@ -14,6 +6,7 @@
     $txtPrecio=(isset($_POST['txtPrecio']))?$_POST['txtPrecio']:"";
     $numStock=(isset($_POST['numStock']))?$_POST['numStock']:"";
     $txtImagen=(isset($_FILES['txtImagen']['name']))?$_FILES['txtImagen']['name']:"";
+    $txtDescripcion=(isset($_POST['txtDescripcion']))?$_POST['txtDescripcion']:"";
     $accion=(isset($_POST['accion']))?$_POST['accion']:"";
     require '../config/LibrosDAO.php';
 ?>
@@ -43,7 +36,11 @@
                             </div>
                             <div class="form-group">
                             <label for="numStock">Stock</label>
-                            <input type="number" required class="form-control" name="numStock" value="<?php echo $numStock; ?>" id="numStock" min="1" max="20" placeholder="Stock">
+                            <input type="number" required class="form-control" name="numStock" value="<?php echo $numStock; ?>" id="numStock" min="1" max="40" placeholder="Stock">
+                            </div>
+                            <div class="form-group">
+                            <label for="txtDescripcion">Descripción</label>
+                            <textarea name="txtDescripcion" required class="form-control" id="txtDescripcion" cols="38" rows="7" placeholder="Escribe la sinopsis del libro"><?php echo $txtDescripcion; ?></textarea>
                             </div>
                             <div class="form-group">
                             <label for="Imagen">Imagen</label>
@@ -68,7 +65,7 @@
                     
                 </div>
                 <div class="col-md-8">
-                    <table class="table ">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -96,12 +93,34 @@
                                     <form method="post">
                                         <input type="hidden" name="txtID" id="txtID" value="<?php echo $resultado['ID']; ?>" />
                                         <input type="submit" name="accion" value="Seleccionar" class="btn btn-primary"/>
-                                        <input type="submit" name="accion" value="Borrar" class="btn btn-danger"/>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal<?php echo $resultado['ID']; ?>">Borrar</button>
                                     </form>
                                 </td>
                             </tr>
-                            <?php } ?>
-                            
+                            <!-- Ventana modal de los libros -->
+                            <div class="modal fade" id="exampleModal<?php echo $resultado['ID']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Borrar Libro</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Estás seguro de borrar este libro?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            <form method="post">
+                                                <input type="hidden" name="txtID" id="txtID" value="<?php echo $resultado['ID']; ?>" />
+                                                <input type="submit" name="accion" value="Borrar" class="btn btn-danger"/>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?> 
                         </tbody>
                     </table>
                 </div>
