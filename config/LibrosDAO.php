@@ -2,8 +2,8 @@
     require 'conexion.php';
     switch($accion){
         case "Agregar": //insertar libro
-            $sentencia=$conexion->prepare("INSERT INTO libros(nombre, autor, precio, stock, imagen, descripcion) 
-                VALUES(:nombre, :autor, :precio, :stock, :imagen, :descripcion)");
+            $sentencia=$conexion->prepare("INSERT INTO libros(nombre, autor, precio, stock, imagen, descripcion, categoria) 
+                VALUES(:nombre, :autor, :precio, :stock, :imagen, :descripcion,:categoria)");
             $sentencia->bindParam(":nombre",$txtNombre);
             $sentencia->bindParam(":autor",$txtAutor);
             $sentencia->bindParam(":precio",$txtPrecio);
@@ -21,17 +21,19 @@
             }
             $sentencia->bindParam(":imagen",$nombreArchivo);
             $sentencia->bindParam(":descripcion",$txtDescripcion);
+            $sentencia->bindParam(":categoria",$txtCategoria);
             $sentencia->execute();
             header("Location:libros.php");
             break;
         case "Modificar":
             $sentencia=$conexion->prepare("UPDATE libros SET nombre=:nombre, autor=:autor,
-            precio=:precio, stock=:stock, descripcion=:descripcion WHERE ID=:id");
+            precio=:precio, stock=:stock, descripcion=:descripcion, categoria=:categoria WHERE ID=:id");
             $sentencia->bindParam(":nombre",$txtNombre);
             $sentencia->bindParam(":autor",$txtAutor);
             $sentencia->bindParam(":precio",$txtPrecio);
             $sentencia->bindParam(":stock",$numStock);
             $sentencia->bindParam(":descripcion",$txtDescripcion);
+            $sentencia->bindParam(":categoria",$txtCategoria);
             $sentencia->bindParam(":id",$txtID);
             $sentencia->execute();
             header("Location:libros.php");
@@ -54,7 +56,7 @@
                 $datosLibro=$sentencia->fetch(PDO::FETCH_LAZY);
                 if(isset($datosLibro["imagen"]) && ($datosLibro["imagen"]!="noImagen.jpg") ){
                     if(file_exists("../assets/img/".$datosLibro["imagen"])){
-                        unlink("../assets/img/".$datosLibro["imagen"]); //borra imagen
+                        unlink("../assets/img/".$datosLibro["imagen"]); //borra imagen anterior
                     }
                 }
                 $sentencia=$conexion->prepare("UPDATE libros SET imagen=:imagen WHERE ID=:id");
@@ -77,6 +79,7 @@
             $txtPrecio=$datosLibro['precio'];
             $numStock=$datosLibro['stock'];
             $txtDescripcion=$datosLibro['descripcion'];
+            $txtCategoria=$datosLibro['categoria'];
             $txtImagen=$datosLibro['imagen'];
             break;
         case "Borrar":
@@ -97,9 +100,6 @@
             header("Location:libros.php");
             break;
     }
-    //Sentencia para obtener los libros
-    $querySelect=$conexion->prepare("SELECT * FROM libros");
-    $querySelect->execute();
-    $resultados=$querySelect->fetchAll(PDO::FETCH_ASSOC);
+    require("librosFull.php");
 
 ?>

@@ -7,6 +7,7 @@
     $numStock=(isset($_POST['numStock']))?$_POST['numStock']:"";
     $txtImagen=(isset($_FILES['txtImagen']['name']))?$_FILES['txtImagen']['name']:"";
     $txtDescripcion=(isset($_POST['txtDescripcion']))?$_POST['txtDescripcion']:"";
+    $txtCategoria=(isset($_POST['txtCategoria']))?$_POST['txtCategoria']:"";
     $accion=(isset($_POST['accion']))?$_POST['accion']:"";
     require '../config/LibrosDAO.php';
 ?>
@@ -39,6 +40,18 @@
                             <input type="number" required class="form-control" name="numStock" value="<?php echo $numStock; ?>" id="numStock" min="1" max="40" placeholder="Stock">
                             </div>
                             <div class="form-group">
+                            <label for="txtCategoria">Categoria</label>
+                            <select class="form-control" required name="txtCategoria" id="txtCategoria">
+                                <option value="">Elige una categoria</option>
+                                <option value="accion" <?php if($txtCategoria=="accion"){echo "selected";} ?>>Acción</option>
+                                <option value="ficcion" <?php if($txtCategoria=="ficcion"){echo "selected";} ?>>Ciencia ficción</option>
+                                <option value="cuentos" <?php if($txtCategoria=="cuentos"){echo "selected";} ?>>Cuentos</option>
+                                <option value="infantil" <?php if($txtCategoria=="infantil"){echo "selected";} ?>>Infantil</option>
+                                <option value="misterio" <?php if($txtCategoria=="misterio"){echo "selected";} ?>>Misterio</option>
+                                <option value="romantica" <?php if($txtCategoria=="romantica"){echo "selected";} ?>>Novela romántica</option>
+                            </select>
+                            </div>
+                            <div class="form-group">
                             <label for="txtDescripcion">Descripción</label>
                             <textarea name="txtDescripcion" required class="form-control" id="txtDescripcion" cols="38" rows="7" placeholder="Escribe la sinopsis del libro"><?php echo $txtDescripcion; ?></textarea>
                             </div>
@@ -65,6 +78,7 @@
                     
                 </div>
                 <div class="col-md-8">
+                    <a href="exports/librosExport.php" class="btn btn-primary mb-3">Exportar tabla a excel</a>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -72,6 +86,7 @@
                                 <th>Nombre</th>
                                 <th>Autor</th>
                                 <th>Precio</th>
+                                <th>Categoria</th>
                                 <th>Stock</th>
                                 <th>Imagen</th>
                                 <th>Acciones</th>
@@ -85,6 +100,7 @@
                                 <td><?php echo $resultado['nombre']; ?></td>
                                 <td><?php echo $resultado['autor']; ?></td>
                                 <td><?php echo $resultado['precio']; ?></td>
+                                <td><?php echo $resultado['categoria']; ?></td>
                                 <td><?php echo $resultado['stock']; ?></td>
                                 <td>
                                     <img src="../assets/img/<?php echo $resultado['imagen']; ?>" width="50" alt="imagen">

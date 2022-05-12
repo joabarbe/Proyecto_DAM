@@ -28,8 +28,12 @@
                             <input type="password" required class="form-control" name="txtContrasenia" value="<?php echo $txtContrasenia; ?>" id="txtContrasenia" placeholder="Contraseña">
                             </div>
                             <div class="form-group">
-                            <label for="txtPrecio">Rol</label>
-                            <input type="text" required class="form-control" name="txtRol" value="<?php echo $txtRol; ?>" id="txtRol" placeholder="Rol">
+                            <label for="txtRol">Rol</label>
+                            <select class="form-control" required name="txtRol" id="txtRol">
+                                <option value="">Elige un rol</option>
+                                <option value="administrador" <?php if($txtRol=="administrador"){echo "selected";} ?>>Administrador</option>
+                                <option value="empleado" <?php if($txtRol=="empleado"){echo "selected";} ?>>Empleado</option>
+                            </select>
                             </div>
                             <div class="btn-group" role="group" aria-label="">
                                 <button type="submit" value="Agregar" name="accion" <?php echo ($accion=="Seleccionar")?"disabled":""; ?> class="btn btn-success">Agregar</button>
