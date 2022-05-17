@@ -6,7 +6,10 @@
     require ("../config/ReservasDAO.php");
 ?>
                 <div class="col-md-12">
-                    <a href="exports/reservasExport.php" class="btn btn-primary mb-3">Exportar tabla a excel</a>
+                    <!-- Para desaparecer el boton de exportar tabla si no es administrador -->
+                    <?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]=="administrador"){ ?>
+                    <a href="exports/reservasExport.php" class="btn btn-success mb-3">Exportar tabla a excel</a>
+                    <?php } ?>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -17,6 +20,7 @@
                                 <th>Teléfono</th>
                                 <th>Dirección</th>
                                 <th>Cantidad</th>
+                                <th>Stock</th>
                                 <th>Libro</th>
                                 <th>Accion</th>
                             </tr>
@@ -28,15 +32,19 @@
                                 <td><?php echo $resultado['id']; ?></td>
                                 <td><?php echo $resultado['nom_cliente']; ?></td>
                                 <td><?php echo $resultado['apell_cliente']; ?></td>
-                                <td><?php echo $resultado['email']; ?></td>
+                                <td class="email-text"><a href="mailto:<?php echo $resultado['email']; ?>"><?php echo $resultado['email']; ?></td>
                                 <td><?php echo $resultado['telefono']; ?></td>
                                 <td><?php echo $resultado['direccion']; ?></td>
                                 <td><?php echo $resultado['cantidad']; ?></td>
+                                <td><?php echo $resultado['stock']; ?></td>
                                 <td><?php echo $resultado['nombre']; ?></td>
                                 <td>
                                     <form method="post">
                                     <input type="hidden" name="txtID" id="txtID" value="<?php echo $resultado['id']; ?>" />
+                                    <!-- no permitir la completar la reserva si hay menos stock que la cantidad de libros pedida -->
+                                    <?php if($resultado["stock"]>$resultado["cantidad"]){ ?>
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmarModal<?php echo $resultado['id']; ?>">Completado</button>
+                                    <?php } ?>
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal<?php echo $resultado['id']; ?>">Borrar</button>
                                     </form>
                                 </td>

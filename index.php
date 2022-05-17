@@ -1,33 +1,17 @@
 <?php include("template/header.php")?>
 <?php 
-    require("config/conexion.php"); 
-    //Para realizar el filtro por categoria
-    if(isset($_GET["filtro"])){
-        $querySelect=$conexion->prepare("SELECT * FROM libros WHERE categoria=:categoria");
-        $querySelect->bindParam(":categoria",$_GET["filtro"]);
-        $querySelect->execute();
-        $resultados=$querySelect->fetchAll(PDO::FETCH_ASSOC);
-    }else{
-        $querySelect=$conexion->prepare("SELECT * FROM libros");
-        $querySelect->execute();
-        $resultados=$querySelect->fetchAll(PDO::FETCH_ASSOC);
-    }
-    //para la busqueda de libros por nombre
-    $busqueda=(isset($_POST['busqueda']))?$_POST['busqueda']:"";
-    $palabra=(isset($_POST['palabra']))?$_POST['palabra']:"";
-    if($busqueda=="Buscar"){
-        $sentencia=$conexion->prepare("SELECT * FROM libros WHERE nombre LIKE :nombre");
-        $sentencia->bindValue(":nombre","%$palabra%");
-        $sentencia->execute();
-        $resultados=$sentencia->fetchAll(PDO::FETCH_ASSOC);
-    }
+    require("config/conexion.php");
+    //para que se muestren los libros
+    require("config/librosFull.php"); 
+    //para realizar los filtros
+    require("config/filtrosDAO.php");
 ?>
 <!-- Formulario para el filtro por nombre -->
 <div class="col-md-6 border border-secondary p-3">
     <form method="post" class="form-inline">
         <div class="form-group">
             <label class="mr-2">Buscar Libro</label>
-            <input type="text" class="form-control mr-2" name="palabra" value="<?php echo $palabra; ?>" placeholder="Buscar Libro">
+            <input type="text" class="form-control formulario-input mr-2" name="palabra" value="<?php echo $palabra; ?>" placeholder="Buscar Libro">
         </div>
         <input type="submit" value="Buscar" class="btn btn-primary" name="busqueda" id="busqueda">
     </form>
@@ -37,8 +21,8 @@
     <form action="index.php" method="POST" class="form-inline">
         <div class="form-group">
             <label for="filtro" class="mr-2">Filtrar por categoría</label>
-            <select name="categoria" class="form-control mr-2" id="filtro">
-                <option>Elija una categoría</option>
+            <select name="categoria" class="form-control formulario-input mr-2" id="filtro">
+                <option selected disabled>Elija una categoría</option>
                 <option value="accion">Acción</option>
                 <option value="ficcion">Ciencia ficción</option>
                 <option value="cuentos">Cuentos</option>
@@ -50,11 +34,13 @@
         </div>
     </form>
 </div>
+<?php $numLibros=0; ?>
+<!-- Mostrar todos los libros -->
 <?php foreach($resultados as $resultado){ ?>
 <div class="col-md-3 mb-3 mt-3" >
     <div class="card border-secondary">
         <a href="reservas.php?id=<?php echo $resultado['ID']; ?>">
-            <img src="assets/img/<?php echo $resultado["imagen"]; ?>" alt="imagen" height="200" class="card-img-top">
+            <img src="assets/img/<?php echo $resultado["imagen"]; ?>" alt="imagen" height="300" class="card-img-top">
         </a>
         <div class="card-body">
             <a href="reservas.php?id=<?php echo $resultado['ID']; ?>">
@@ -66,5 +52,10 @@
         </div>
     </div>
 </div>
-<?php } ?>           
+<?php $numLibros++;} ?> 
+<?php if($numLibros==0){?>
+    <div class="alert alert-danger mt-3 center" role="alert">
+        <?php echo "No hay libros con ese título, vuelva a intentarlo poniendo otro título"; ?>
+    </div>
+<?php } ?>
 <?php include("template/footer.php")?>

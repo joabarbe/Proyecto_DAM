@@ -8,6 +8,11 @@
     require ("../config/UsuariosDAO.php");
 ?>
                 <div class="col-md-4">
+                <?php if(!empty($mensaje)): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $mensaje ?>
+                    </div>
+                <?php endif; ?>
                     <div class="card">
                         <div class="card-header">
                             Usuarios
@@ -21,15 +26,15 @@
                             </div>
                             <div class="form-group">
                             <label for="txtNombre">Usuario</label>
-                            <input type="text" required class="form-control" name="txtUsuario" value="<?php echo $txtUsuario; ?>" id="txtUsuario" placeholder="Usuario">
+                            <input type="text" required class="form-control formulario-input" name="txtUsuario" value="<?php echo $txtUsuario; ?>" id="txtUsuario" placeholder="Usuario">
                             </div>
                             <div class="form-group">
                             <label for="txtAutor">Contraseña</label>
-                            <input type="password" required class="form-control" name="txtContrasenia" value="<?php echo $txtContrasenia; ?>" id="txtContrasenia" placeholder="Contraseña">
+                            <input type="password" required class="form-control formulario-input" name="txtContrasenia" value="<?php echo $txtContrasenia; ?>" id="txtContrasenia" placeholder="Contraseña">
                             </div>
                             <div class="form-group">
                             <label for="txtRol">Rol</label>
-                            <select class="form-control" required name="txtRol" id="txtRol">
+                            <select class="form-control formulario-input" required name="txtRol" id="txtRol">
                                 <option value="">Elige un rol</option>
                                 <option value="administrador" <?php if($txtRol=="administrador"){echo "selected";} ?>>Administrador</option>
                                 <option value="empleado" <?php if($txtRol=="empleado"){echo "selected";} ?>>Empleado</option>

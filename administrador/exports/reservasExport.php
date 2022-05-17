@@ -8,6 +8,7 @@
     <style>
         td, th{
             border: solid 1px;
+            background-color: beige;
         }
     </style>
 </head>
@@ -26,6 +27,7 @@
         <th>Teléfono</th>
         <th>Dirección</th>
         <th>Cantidad</th>
+        <th>Stock</th>
         <th>Libro</th>
     </tr>
 </thead>";
@@ -38,6 +40,7 @@
             <td>".$resultado['telefono']."</td>
             <td>".$resultado['direccion']."</td>
             <td>".$resultado['cantidad']."</td>
+            <td>".$resultado['stock']."</td>
             <td>".$resultado['nombre']."</td>
             </tr>";
     }

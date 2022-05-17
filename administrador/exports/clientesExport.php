@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de libros</title>
+    <title>Listado de clientes</title>
     <style>
         td, th{
             border: solid 1px;
@@ -15,32 +15,34 @@
 <body>
 <?php
     require("../../config/conexion.php");
-    require("../../config/librosFull.php");
+    require("../../config/clientesFull.php");
     $salida="";
     $salida.="<table>";
     $salida.="<thead>
     <tr>
         <th>ID</th>
         <th>Nombre</th>
-        <th>Autor</th>
-        <th>Precio</th>
-        <th>Categoria</th>
-        <th>Stock</th>
+        <th>Apellidos</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Dirección</th>
+        <th>Observaciones</th>
     </tr>
 </thead>";
     foreach($resultados as $resultado){
         $salida.="<tr>
-            <td>".$resultado['ID']."</td>
-            <td>".$resultado['nombre']."</td>
-            <td>".$resultado['autor']."</td>
-            <td>".$resultado['precio']."</td>
-            <td>".$resultado['categoria']."</td>
-            <td>".$resultado['stock']."</td>
+            <td>".$resultado['id']."</td>
+            <td>".$resultado['nombre_cliente']."</td>
+            <td>".$resultado['apellidos_cliente']."</td>
+            <td>".$resultado['correo']."</td>
+            <td>".$resultado['telef']."</td>
+            <td>".$resultado['direcc']."</td>
+            <td>".$resultado['observaciones']."</td>
             </tr>";
     }
     $salida.="</table>";
     header("Content-Type: application/vnd.ms-excel");
-    header("Content-Disposition: attachment; filename=libros.xls");
+    header("Content-Disposition: attachment; filename=clientes.xls");
     echo $salida;
 ?>    
 </body>

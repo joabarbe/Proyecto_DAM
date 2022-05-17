@@ -1,42 +1,68 @@
 <?php
     require 'conexion.php';
+    require("librosFull.php");
+    $mensaje="";
+    $contador=0;
     switch($accion){
         case "Agregar": //insertar libro
-            $sentencia=$conexion->prepare("INSERT INTO libros(nombre, autor, precio, stock, imagen, descripcion, categoria) 
+            foreach($resultados as $resultado){
+                if($txtNombre==$resultado["nombre"]){
+                    $id_libro=$resultado["ID"];
+                    $contador++;
+                }
+            }
+            if($contador==0){
+                $sentencia=$conexion->prepare("INSERT INTO libros(nombre, autor, precio, stock, imagen, descripcion, categoria) 
                 VALUES(:nombre, :autor, :precio, :stock, :imagen, :descripcion,:categoria)");
-            $sentencia->bindParam(":nombre",$txtNombre);
-            $sentencia->bindParam(":autor",$txtAutor);
-            $sentencia->bindParam(":precio",$txtPrecio);
-            $sentencia->bindParam(":stock",$numStock);
-            //guardar imágenes en la carpeta img
-            $fecha=new DateTime();
-            if($txtImagen!=""){
-                $nombreArchivo=$fecha->getTimestamp()."_".$_FILES['txtImagen']['name'];
+                $sentencia->bindParam(":nombre",$txtNombre);
+                $sentencia->bindParam(":autor",$txtAutor);
+                $sentencia->bindParam(":precio",$txtPrecio);
+                $sentencia->bindParam(":stock",$numStock);
+                //darle un nombre al archivo de la imagen
+                $fecha=new DateTime();
+                if($txtImagen!=""){
+                    $nombreArchivo=$fecha->getTimestamp()."_".$_FILES['txtImagen']['name'];
+                }else{
+                    $nombreArchivo="noImagen.jpg";
+                }
+                //nombre temporal de la imagen donde se guarda la imagen 
+                $tmpImagen=$_FILES['txtImagen']['tmp_name'];
+                if($tmpImagen!=""){
+                    //mover la imagen a una ubicacion
+                    move_uploaded_file($tmpImagen,"../assets/img/".$nombreArchivo);
+                }
+                $sentencia->bindParam(":imagen",$nombreArchivo);
+                $sentencia->bindParam(":descripcion",$txtDescripcion);
+                $sentencia->bindParam(":categoria",$txtCategoria);
+                $sentencia->execute();
+                header("Location:libros.php");
             }else{
-                $nombreArchivo="noImagen.jpg";
+                $mensaje="El título del libro ya existe con el ID ".$id_libro;
             }
-            $tmpImagen=$_FILES['txtImagen']['tmp_name'];
-            if($tmpImagen!=""){
-                move_uploaded_file($tmpImagen,"../assets/img/".$nombreArchivo);
-            }
-            $sentencia->bindParam(":imagen",$nombreArchivo);
-            $sentencia->bindParam(":descripcion",$txtDescripcion);
-            $sentencia->bindParam(":categoria",$txtCategoria);
-            $sentencia->execute();
-            header("Location:libros.php");
+            
             break;
         case "Modificar":
-            $sentencia=$conexion->prepare("UPDATE libros SET nombre=:nombre, autor=:autor,
-            precio=:precio, stock=:stock, descripcion=:descripcion, categoria=:categoria WHERE ID=:id");
-            $sentencia->bindParam(":nombre",$txtNombre);
-            $sentencia->bindParam(":autor",$txtAutor);
-            $sentencia->bindParam(":precio",$txtPrecio);
-            $sentencia->bindParam(":stock",$numStock);
-            $sentencia->bindParam(":descripcion",$txtDescripcion);
-            $sentencia->bindParam(":categoria",$txtCategoria);
-            $sentencia->bindParam(":id",$txtID);
-            $sentencia->execute();
-            header("Location:libros.php");
+            foreach($resultados as $resultado){
+                if($txtNombre==$resultado["nombre"] && $txtID!=$resultado["ID"]){
+                    $id_libro=$resultado["ID"];
+                    $contador++;
+                }
+            }
+            if($contador==0){
+                $sentencia=$conexion->prepare("UPDATE libros SET nombre=:nombre, autor=:autor,
+                precio=:precio, stock=:stock, descripcion=:descripcion, categoria=:categoria WHERE ID=:id");
+                $sentencia->bindParam(":nombre",$txtNombre);
+                $sentencia->bindParam(":autor",$txtAutor);
+                $sentencia->bindParam(":precio",$txtPrecio);
+                $sentencia->bindParam(":stock",$numStock);
+                $sentencia->bindParam(":descripcion",$txtDescripcion);
+                $sentencia->bindParam(":categoria",$txtCategoria);
+                $sentencia->bindParam(":id",$txtID);
+                $sentencia->execute();
+                header("Location:libros.php");
+            }else{
+                $mensaje="El título del libro ya existe con el ID ".$id_libro;
+            }
             //modificar imagen
             //establecer nombre de la imagen nueva
             if($txtImagen!=""){
@@ -100,6 +126,5 @@
             header("Location:libros.php");
             break;
     }
-    require("librosFull.php");
 
 ?>

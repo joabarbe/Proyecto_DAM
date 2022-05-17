@@ -14,6 +14,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <!-- favicon -->
+    <link  rel="icon" href="assets/img/book-open-solid.png" type="image/png" />
 </head>
 <body>
     <!-- Header -->
@@ -27,7 +29,7 @@
     </header>
 
     <!-- Barra de navegación-->
-    <nav class="navbar navbar-expand-lg navbar-primary" style="margin-bottom: 10px;">
+    <nav class="navbar navbar-expand-lg navbar-primary">
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -35,6 +37,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="nosotros.php">Sobre Nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="nuevoCliente.php">Nuevo Cliente</a>
                 </li>
             </ul>
             <ul class="navbar-nav mr-right">

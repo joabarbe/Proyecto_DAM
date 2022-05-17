@@ -12,6 +12,11 @@
     require '../config/LibrosDAO.php';
 ?>
                 <div class="col-md-4">
+                <?php if(!empty($mensaje)): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $mensaje ?>
+                    </div>
+                <?php endif; ?>
                     <div class="card">
                         <div class="card-header">
                             Libros
@@ -24,24 +29,24 @@
                             <input type="text" required readonly class="form-control" name="txtID" value="<?php echo $txtID; ?>" id="txtID" placeholder="ID">
                             </div>
                             <div class="form-group">
-                            <label for="txtNombre">Nombre</label>
-                            <input type="text" required class="form-control" name="txtNombre" value="<?php echo $txtNombre; ?>" id="txtNombre" placeholder="Nombre">
+                            <label for="txtNombre">Título</label>
+                            <input type="text" required class="form-control formulario-input" name="txtNombre" value="<?php echo $txtNombre; ?>" id="txtNombre" placeholder="Nombre">
                             </div>
                             <div class="form-group">
                             <label for="txtAutor">Autor</label>
-                            <input type="text" required class="form-control" name="txtAutor" value="<?php echo $txtAutor; ?>" id="txtAutor" placeholder="Autor">
+                            <input type="text" required class="form-control formulario-input" name="txtAutor" value="<?php echo $txtAutor; ?>" id="txtAutor" placeholder="Autor">
                             </div>
                             <div class="form-group">
                             <label for="txtPrecio">Precio</label>
-                            <input type="text" required class="form-control" name="txtPrecio" value="<?php echo $txtPrecio; ?>" id="txtPrecio" placeholder="Precio">
+                            <input type="text" required class="form-control formulario-input" name="txtPrecio" value="<?php echo $txtPrecio; ?>" id="txtPrecio" placeholder="Precio">
                             </div>
                             <div class="form-group">
                             <label for="numStock">Stock</label>
-                            <input type="number" required class="form-control" name="numStock" value="<?php echo $numStock; ?>" id="numStock" min="1" max="40" placeholder="Stock">
+                            <input type="number" required class="form-control formulario-input" name="numStock" value="<?php echo $numStock; ?>" id="numStock" min="0" max="99" placeholder="Stock">
                             </div>
                             <div class="form-group">
                             <label for="txtCategoria">Categoria</label>
-                            <select class="form-control" required name="txtCategoria" id="txtCategoria">
+                            <select class="form-control formulario-input" required name="txtCategoria" id="txtCategoria">
                                 <option value="">Elige una categoria</option>
                                 <option value="accion" <?php if($txtCategoria=="accion"){echo "selected";} ?>>Acción</option>
                                 <option value="ficcion" <?php if($txtCategoria=="ficcion"){echo "selected";} ?>>Ciencia ficción</option>
@@ -53,7 +58,7 @@
                             </div>
                             <div class="form-group">
                             <label for="txtDescripcion">Descripción</label>
-                            <textarea name="txtDescripcion" required class="form-control" id="txtDescripcion" cols="38" rows="7" placeholder="Escribe la sinopsis del libro"><?php echo $txtDescripcion; ?></textarea>
+                            <textarea name="txtDescripcion" required class="form-control formulario-input" id="txtDescripcion" cols="38" rows="7" placeholder="Escribe la sinopsis del libro"><?php echo $txtDescripcion; ?></textarea>
                             </div>
                             <div class="form-group">
                             <label for="Imagen">Imagen</label>
@@ -78,7 +83,10 @@
                     
                 </div>
                 <div class="col-md-8">
-                    <a href="exports/librosExport.php" class="btn btn-primary mb-3">Exportar tabla a excel</a>
+                    <!-- Para desaparecer el boton de exportar tabla si no es administrador -->
+                    <?php if(isset($_SESSION["rol"]) && $_SESSION["rol"]=="administrador"){ ?>
+                    <a href="exports/librosExport.php" class="btn btn-success mb-3">Exportar tabla a excel</a>
+                    <?php } ?>
                     <table class="table table-striped">
                         <thead>
                             <tr>

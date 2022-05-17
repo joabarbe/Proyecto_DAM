@@ -21,7 +21,12 @@ header h3{
 }
 
 nav{
-    background-color:beige;
+    background-color:beige; 
+    margin-bottom: 10px;
+}
+
+.nav-admin{
+    background-color: #e3f2fd;
 }
 
 nav ul li i{
@@ -37,8 +42,15 @@ nav ul li i{
     color: darkgray;
 }
 
-footer{
-    background-color: #e3f2fd;
-    font-size: 15px;
+.formulario-input{
+    background-color: beige;
+}
+
+.content-center{
     text-align: center;
+}
+
+.email-text{
+    max-width: 200px; 
+    overflow-x: scroll;
 }

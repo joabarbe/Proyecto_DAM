@@ -40,6 +40,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <!-- favicon -->
+    <link  rel="icon" href="../assets/img/book-open-solid.png" type="image/png" />
 </head>
 <body>
     <div class="container">

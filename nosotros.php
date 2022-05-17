@@ -18,5 +18,9 @@
                 un sitio web que sirva tanto para reservar libros como para gestionar la librería desde 
                 la web.
             </p>
+            <p>
+             Este proyecto final para el Grado Superior Desarrollo de Aplicaciones Multiplataforma esta 
+             alojado en <a href="https://github.com/joabarbe/Proyecto_DAM">GitHub</a>.
+            </p>
         </div>
 <?php include("template/footer.php")?>
