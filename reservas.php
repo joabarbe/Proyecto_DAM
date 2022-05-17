@@ -51,27 +51,27 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input type="text" class="form-control formulario-input" id="txtNombre" name="txtNombre" placeholder="Introduce tu nombre">
+                                            <input type="text" required class="form-control formulario-input" id="txtNombre" name="txtNombre" placeholder="Introduce tu nombre">
                                         </div>
                                         <div class="form-group">
                                             <label>Apellidos</label>
-                                            <input type="text" class="form-control formulario-input" id="txtApellidos" name="txtApellidos" placeholder="Introduce tus apellidos">
+                                            <input type="text" required class="form-control formulario-input" id="txtApellidos" name="txtApellidos" placeholder="Introduce tus apellidos">
                                         </div>
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control formulario-input" id="txtEmail" name="txtEmail" placeholder="Introduce tu correo electrónico">
+                                            <input type="email" required class="form-control formulario-input" id="txtEmail" name="txtEmail" placeholder="Introduce tu correo electrónico">
                                         </div>
                                         <div class="form-group">
                                             <label>Teléfono</label>
-                                            <input type="tel" class="form-control formulario-input" id="numTelefono" name="numTelefono" placeholder="Introduce tu teléfono">
+                                            <input type="tel" required class="form-control formulario-input" id="numTelefono" name="numTelefono" placeholder="Introduce tu teléfono">
                                         </div>
                                         <div class="form-group">
                                             <label>Dirección</label>
-                                            <input type="text" class="form-control formulario-input" id="txtDireccion" name="txtDireccion" placeholder="Introduce tu dirección">
+                                            <input type="text" required class="form-control formulario-input" id="txtDireccion" name="txtDireccion" placeholder="Introduce tu dirección">
                                         </div>
                                         <div class="form-group">
                                             <label>Cantidad</label>
-                                            <input type="number" class="form-control formulario-input" id="numCantidad" name="numCantidad" min="1" max="<?php echo $datosLibro["stock"]; ?>" placeholder="Cantidad">
+                                            <input type="number" required class="form-control formulario-input" id="numCantidad" name="numCantidad" min="1" max="<?php echo $datosLibro["stock"]; ?>" placeholder="Cantidad">
                                         </div>
                                         <p>Precio: <?php echo $datosLibro["precio"]; ?>€ por unidad.</p>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
